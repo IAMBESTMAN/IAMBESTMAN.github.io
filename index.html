@@ -307,12 +307,98 @@
 <li>node 必备</li>
 <li>hexo 安装 npm install -g hexo-cli</li>
 </ul>
-<p><strong>第一步</strong></p>
-<p><strong><strong>初始化hexo博客</strong></strong></p>
+<p><strong>第一步初始化hexo博客</strong></p>
 <blockquote>
 <p>这个操作是在本地搭建一个hexo博客，目前操作还不涉及到部署到github</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">hexo init myFirstBlog // 初始化一个hexo 博客</span><br><span class="line">cd myFirstBlog</span><br><span class="line">hexo g //generate 生成静态文件</span><br><span class="line">hexo s //server 启动服务器</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>这个是初始化一个博客的命令<br><img src="http://img.hb.aicdn.com/2820127c229dda6576a3eb3f0fedb4a1d3aed1dc3a8eea-Wn5Q19_fw658" alt="avatar"></p>
+</li>
+<li><p>这个是生成静态文件的命令</p>
+</li>
+</ul>
+<p><img src="http://img.hb.aicdn.com/4f95f158cacc0c60fcd7401b5533bf98740da35ac7c0f-XBNM6n_fw658" alt="avatar"></p>
+<p><img src="http://img.hb.aicdn.com/d711a85fcdf1ceeba4d8a797f08a2b32ff5756039ed6f-0dO3qx_fw658" alt="avatar"></p>
+<ul>
+<li>这个是启动服务的命令</li>
+</ul>
+<p><img src="http://img.hb.aicdn.com/549e15e5d79050391fb7cd83ec884f6aa2b664a18f604-ZsdM5c_fw658" alt="avatar"></p>
+<p><strong>博客初始化完成</strong></p>
+<blockquote>
+<p>服务运行起来，在浏览器的地址栏里面输入127.0.0.1:4000，就会看到你的博客</p>
+</blockquote>
+<p><img src="http://img.hb.aicdn.com/e5135937bf2d65c5b9ae196406fe4d4461079f7214f1b9-Srx0u3_fw658" alt="avatar"></p>
+<blockquote>
+<p>到目前为止你已经初始化完成了一个博客，但是里面的内容还是hexo自己的内容hello world，接下来就是更换自己喜欢的主题，建立自己的第一篇博客啦。</p>
+</blockquote>
+<p><strong><em>更换主题</em></strong></p>
+<blockquote>
+<p><code>_config.yml</code> 是hexo的配置文件，可以在里面更改基本的配置信息，现在主要用的是主题的更换。首先我们需要下载一个博客主题。因为next的star比较多，所以这里就拿next为例。</p>
+</blockquote>
+<ul>
+<li>首先在当前博客的根目录下运行next代码的克隆命令</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/iissnan/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
+<ul>
+<li>然后在根目录下的<code>_config.yml</code>进行主题的更改,将themes改为next</li>
+</ul>
+<p><img src="http://img.hb.aicdn.com/7eb83496a36edcd2f1c0bddbc95503d5a0e9ec9e15a9a-AEltIT_fw658" alt="avatar"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean // 清除缓存,这步必须执行一下不然效果可能看不出来</span><br><span class="line">hexo g</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+<p><img src="http://img.hb.aicdn.com/8b832326529ba5e5b9bbf94321da4faadc743e71bf20a-w50ssO_fw658" alt="avatar"></p>
+<blockquote>
+<p>这里不是next默认的主题如果想更换next自身的主题可以去<code>themes/next/_config.yml</code>更换,更改注释即可</p>
+</blockquote>
+<p><img src="http://img.hb.aicdn.com/4f9aa6530cef1424b670a8574d9432adc40fdb5b24874-qAGbzt_fw658" alt="avatar"></p>
+<p><strong><em>发布第一篇文章</em></strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">hexo new blog // 创建一篇新的文章</span><br><span class="line"></span><br><span class="line">cd source/_posts // 移动到文章的目录上</span><br><span class="line"></span><br><span class="line">vim blog.md // 编写自己的博客文章</span><br><span class="line"></span><br><span class="line">cd ../../</span><br><span class="line"></span><br><span class="line">hexo clean</span><br><span class="line"></span><br><span class="line">hexo g</span><br><span class="line"></span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>文章的是以markdown的形式编写的。编写完成保存文件后，需要生成静态文件也就是把markdown转换成网页，生成静态文件后，网站的源码就会保存在scaffolds文件夹下<br>执行hexo s 访问本地4000端口就可以访问你的第一篇博客了。</p>
+</blockquote>
+<p><img src="http://img.hb.aicdn.com/ce8af77f1fca0a6a7096a7f90f42dd3f2d62eb014ccb1-WtZ9L4_fw658" alt="avatar"></p>
+<p><img src="http://img.hb.aicdn.com/1758e3457f79fea821858ce3b068322255a4ca2c13409b-YIVP2v_fw658" alt="avatar"></p>
+<p><strong>将博客部署到github上</strong></p>
+<ul>
+<li>创建一个新的项目</li>
+</ul>
+<p><img src="http://img.hb.aicdn.com/494698d4d7935ccaf52dbcfa04e03c80597778855915a-6dCE59_fw658" alt="avatar"></p>
+<ul>
+<li>根据格式创建新的项目(因为我已经创建过这个仓库了，所以会有警告，声明一下，创建的仓库必须是自己github名字，不然部署到github上不会出现样式)</li>
+</ul>
+<p><img src="http://img.hb.aicdn.com/9a42efd70130ce9dfb18d8e6a6022f40907c726438a22-GC7PkV_fw658" alt="avatar"></p>
+<ul>
+<li>创建完成后点击 setting 选择master branch 点击save</li>
+</ul>
+<p><img src="http://img.hb.aicdn.com/1ff881cc8ae041f83c95bba16dc7310a025f84ad38be3-Tl5Aiv_fw658" alt="avatar"></p>
+<ul>
+<li>将你的github创建的仓库地址复制到根目录下的 <code>_config.yml</code></li>
+</ul>
+<p><img src="http://img.hb.aicdn.com/b99bec7ec963d8c6ff31372fffd47757daaf0be627a9c-njmeEP_fw658" alt="avatar"></p>
+<ul>
+<li><p>这是你需要一个插件hexo-deployer-git</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git -s</span><br><span class="line">hexo d // 部署到github上的命令</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>部署完成之后，访问github setting里面提供的page地址就可以看到你的博客了</p>
+</li>
+<li><p>如果你有域名的话可以将域名和github关联起来</p>
+<ul>
+<li><p>首先解析你的域名<br>  <img src="http://img.hb.aicdn.com/6e7c1c0033a3bf816960782625ab27c258553fa61ca64-4MY5eG_fw658" alt="avatar"></p>
+<blockquote>
+<p>我用的是阿里云，其它的域名解析也是一样的</p>
+</blockquote>
+</li>
+<li><p>在source文件夹下创建CNAME文件将域名写到文件夹下</p>
+</li>
+<li><p>运行构建</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+<p>  <img src="http://img.hb.aicdn.com/d88dec81c751f73f5e5bf772acea704b184d427af70a-euKK5m_fw658" alt="avatar"><br>  <img src="http://img.hb.aicdn.com/10ab6e8e92552a1b9e5b4f035e007b923fdafe502f3c6-f1icnA_fw658" alt="avatar"></p>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>访问你的域名现在就可以看到你的博客文章啦</p>
+</blockquote>
 
           
         
