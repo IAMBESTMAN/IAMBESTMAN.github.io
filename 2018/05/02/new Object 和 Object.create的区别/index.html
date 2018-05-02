@@ -79,17 +79,19 @@
 
 
 
-<meta name="description" content="微信已经发布了小游戏的开发的文档好长时间了，当时正在做不别的项目，加上最近在开发小程序，一直没有仔细看一遍小游戏的开发文档。这次正好赶上五一假期，三天的时间准备自己做一个小游戏，弥补一下自己的游戏技能以前从来没有做过游戏，只开发过一些简单的h5页面，对游戏这一块一直是门外汉。这次正好有微信小游戏的默认项目，所以就拿来分析一下，看一看微信在开发小游戏的时候规范是什么，游戏开发的逻辑是什么，学习一些">
+<meta name="description" content="最近正在看es6的class语法，看到了一个示例用了Object.create(),就想到为什么不用new Object于是就有了看一下Object.create()和new Object的想法。  为了方便书写 Object.create() 用create代替，new Object用new代替  12345var Base = function () &amp;#123;&amp;#125;var o1 =">
 <meta property="og:type" content="article">
-<meta property="og:title" content="微信小游戏默认项目分析">
-<meta property="og:url" content="http://yoursite.com/2018/05/01/wechatGame/index.html">
+<meta property="og:title" content="new Object 和 Object.create的区别">
+<meta property="og:url" content="http://yoursite.com/2018/05/02/new Object 和 Object.create的区别/index.html">
 <meta property="og:site_name" content="花解语">
-<meta property="og:description" content="微信已经发布了小游戏的开发的文档好长时间了，当时正在做不别的项目，加上最近在开发小程序，一直没有仔细看一遍小游戏的开发文档。这次正好赶上五一假期，三天的时间准备自己做一个小游戏，弥补一下自己的游戏技能以前从来没有做过游戏，只开发过一些简单的h5页面，对游戏这一块一直是门外汉。这次正好有微信小游戏的默认项目，所以就拿来分析一下，看一看微信在开发小游戏的时候规范是什么，游戏开发的逻辑是什么，学习一些">
+<meta property="og:description" content="最近正在看es6的class语法，看到了一个示例用了Object.create(),就想到为什么不用new Object于是就有了看一下Object.create()和new Object的想法。  为了方便书写 Object.create() 用create代替，new Object用new代替  12345var Base = function () &amp;#123;&amp;#125;var o1 =">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-30T17:54:57.646Z">
+<meta property="og:image" content="http://img.hb.aicdn.com/61dc3eb196d0b37d561e7eeee9a3bb3deffdadf332c9-TgEc66_fw658">
+<meta property="og:updated_time" content="2018-05-02T10:06:57.076Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="微信小游戏默认项目分析">
-<meta name="twitter:description" content="微信已经发布了小游戏的开发的文档好长时间了，当时正在做不别的项目，加上最近在开发小程序，一直没有仔细看一遍小游戏的开发文档。这次正好赶上五一假期，三天的时间准备自己做一个小游戏，弥补一下自己的游戏技能以前从来没有做过游戏，只开发过一些简单的h5页面，对游戏这一块一直是门外汉。这次正好有微信小游戏的默认项目，所以就拿来分析一下，看一看微信在开发小游戏的时候规范是什么，游戏开发的逻辑是什么，学习一些">
+<meta name="twitter:title" content="new Object 和 Object.create的区别">
+<meta name="twitter:description" content="最近正在看es6的class语法，看到了一个示例用了Object.create(),就想到为什么不用new Object于是就有了看一下Object.create()和new Object的想法。  为了方便书写 Object.create() 用create代替，new Object用new代替  12345var Base = function () &amp;#123;&amp;#125;var o1 =">
+<meta name="twitter:image" content="http://img.hb.aicdn.com/61dc3eb196d0b37d561e7eeee9a3bb3deffdadf332c9-TgEc66_fw658">
 
 
 
@@ -119,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/05/01/wechatGame/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/05/02/new Object 和 Object.create的区别/"/>
 
 
 
 
 
-  <title>微信小游戏默认项目分析 | 花解语</title>
+  <title>new Object 和 Object.create的区别 | 花解语</title>
   
 
 
@@ -232,7 +234,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/01/wechatGame/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/02/new Object 和 Object.create的区别/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="huajieyu">
@@ -249,7 +251,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">微信小游戏默认项目分析</h1>
+          <h1 class="post-title" itemprop="name headline">new Object 和 Object.create的区别</h1>
         
 
         <div class="post-meta">
@@ -261,8 +263,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-01T01:00:16+08:00">
-                2018-05-01
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-02T18:06:57+08:00">
+                2018-05-02
               </time>
             
 
@@ -284,8 +286,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/微信开发/" itemprop="url" rel="index">
-                    <span itemprop="name">微信开发</span>
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
                   </a>
                 </span>
 
@@ -321,16 +323,27 @@
       
 
       
-        <blockquote>
-<p>微信已经发布了小游戏的开发的文档好长时间了，当时正在做不别的项目，加上最近在开发小程序，一直没有仔细看一遍小游戏的开发文档。<br>这次正好赶上五一假期，三天的时间准备自己做一个小游戏，弥补一下自己的游戏技能<br>以前从来没有做过游戏，只开发过一些简单的h5页面，对游戏这一块一直是门外汉。这次正好有微信小游戏的默认项目，所以就拿来分析一下，看一看微信在开发小游戏的时候规范是什么，游戏开发的逻辑是什么，学习一些基本的游戏开发技能。<br>废话不多说正式开始啦</p>
-</blockquote>
-<p><strong>目录</strong></p>
+        <p>最近正在看es6的class语法，看到了一个示例用了<code>Object.create()</code>,就想到为什么不用<code>new Object</code>于是就有了看一下<code>Object.create()</code>和<code>new Object</code>的想法。</p>
 <blockquote>
-<p>根文件目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">./</span><br><span class="line">├── audio                                    // 存放音频</span><br><span class="line">├── images				    //  存放图片</span><br><span class="line">├── js					   </span><br><span class="line">├── game.js</span><br><span class="line">├── game.json</span><br><span class="line">├── project.config.json                    // 配置文件         </span><br><span class="line">└── README.md</span><br></pre></td></tr></table></figure></p>
+<p>为了方便书写 <code>Object.create()</code> 用create代替，<code>new Object</code>用new代替</p>
 </blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var Base = function () &#123;&#125;</span><br><span class="line">var o1 = new Base();</span><br><span class="line">var o2 = Object.create(Base);</span><br><span class="line">console.log(o1); // Base()</span><br><span class="line">console.log(o2); // Function()</span><br></pre></td></tr></table></figure>
+<p>创建了一个名为Base的构造函数，分别用 new 和 create创建了两个实例。打印的结果出乎意。o1实例的<code>Base类</code> o2是<code>Function类</code></p>
+<p>o1的<code>__proto__</code>指向的是Base类的prototype,Base类的<code>__proto__</code>指向的是Object这个基类的原型.</p>
+<p>o2指向的是Function的<code>prototype</code>, Function本身就是基类.</p>
+<p><strong><strong>那么这两个具体的区别是什么那？</strong></strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var Base = function () &#123;&#125;</span><br><span class="line">Base.prototype = &#123;</span><br><span class="line">  say: function () &#123;</span><br><span class="line">    console.log(&apos;hello&apos;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">var o1 = new Base();</span><br><span class="line"></span><br><span class="line">var o2 = Object.create(Base);</span><br><span class="line"></span><br><span class="line">o1.say(); // hello</span><br><span class="line">o2.say(); // o2.say is not a function</span><br></pre></td></tr></table></figure>
+<p>为<code>Base</code>构造函数的<code>prototype</code>增加一个say方法，o1、o2实例分别执行这个方法。<br><code>o1.say()</code> 执行的结果是 hello ，<code>o2.say()</code>抛错说 <code>o2.say</code> 不是一个函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var Base = function () &#123;</span><br><span class="line">  this.a = 1;</span><br><span class="line">&#125;</span><br><span class="line">Base.prototype = &#123;</span><br><span class="line">  say: function () &#123;</span><br><span class="line">    console.log(&apos;hello&apos;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">var o1 = new Base();</span><br><span class="line"></span><br><span class="line">var o2 = Object.create(Base);</span><br><span class="line">console.log(o1.__proto__); // &#123; say: [Function: say] &#125;</span><br><span class="line">console.log(o2.__proto__); // [Function: Base]</span><br></pre></td></tr></table></figure>
+<p>然后我分别打印了两个实例的<code>__proto__</code>，发现两个实例的<code>__proto__</code>的指向不是一样的，o1的指向是Base构造函数的原型，而o2的指向是构造函数本身。由此就可以明白了为什么<code>o2.say()</code>不是一个函数了，o2的<code>prototype</code>是Base构造函数，而Base的<code>__proto__</code>的指向是<code>Function</code>这个基类</p>
+<p><img src="http://img.hb.aicdn.com/61dc3eb196d0b37d561e7eeee9a3bb3deffdadf332c9-TgEc66_fw658" alt="avatar"></p>
+<p>这个是我分析后画出来的原型图，通过这个原型图可以看出，o1实例指向的是Base这个构造函数的原型，o2指向的是这个构造函数，o1继承了Base<code>prototype</code>上的属性和方法，而o2直接通过<code>__proto__</code>查找Base的所属类的原型也就是<code>Function</code>,并没有继承任何方法。</p>
+<p><strong><strong>为什么会出现这种情况那？</strong></strong></p>
 <blockquote>
-<p>js文件目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">./js</span><br><span class="line">├── base                                   // 定义游戏开发基础类</span><br><span class="line">│   ├── animatoin.js                       // 帧动画的简易实现</span><br><span class="line">│   ├── pool.js                            // 对象池的简易实现</span><br><span class="line">│   └── sprite.js                          // 游戏基本元素精灵类</span><br><span class="line">├── libs</span><br><span class="line">│   ├── symbol.js                          // ES6 Symbol简易兼容</span><br><span class="line">│   └── weapp-adapter.js                   // 小游戏适配器</span><br><span class="line">├── npc</span><br><span class="line">│   └── enemy.js                           // 敌机类</span><br><span class="line">├── player</span><br><span class="line">│   ├── bullet.js                          // 子弹类</span><br><span class="line">│   └── index.js                           // 玩家类</span><br><span class="line">├── runtime</span><br><span class="line">│   ├── background.js                      // 背景类</span><br><span class="line">│   ├── gameinfo.js                        // 用于展示分数和结算界面</span><br><span class="line">│   └── music.js                           // 全局音效管理器</span><br><span class="line">├── databus.js                             // 管控游戏状态</span><br><span class="line">└── main.js</span><br></pre></td></tr></table></figure></p>
+<p>分析一下Object.create的实现 方法</p>
 </blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Object.create = function(o) &#123;</span><br><span class="line">    var F = function() &#123;&#125;;</span><br><span class="line">    F.prototype = o;</span><br><span class="line">    return new F;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从Object.create的实现方式可以看出 ，实现方式是先创建一个构造函数，然后让这个对象的原型等于传递进来的方法，然后在new一个新的实例。问什么会和 new 创建的方法不一样的，只要是因为新的实例的原型指向的是构造函数，并不是构造函数的原型</p>
 
       
     </div>
@@ -355,8 +368,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/27/hello-hexo/" rel="next" title="Hello Hexo">
-                <i class="fa fa-chevron-left"></i> Hello Hexo
+              <a href="/2018/05/01/wechatGame/" rel="next" title="微信小游戏默认项目分析">
+                <i class="fa fa-chevron-left"></i> 微信小游戏默认项目分析
               </a>
             
           </div>
@@ -364,10 +377,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/02/new Object 和 Object.create的区别/" rel="prev" title="new Object 和 Object.create的区别">
-                new Object 和 Object.create的区别 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
