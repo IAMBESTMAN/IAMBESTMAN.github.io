@@ -229,6 +229,187 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/06/typeScript笔记1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="huajieyu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="花解语">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/06/typeScript笔记1/" itemprop="url">typeSctipt基础笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-06T15:10:41+08:00">
+                2018-06-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/typescript/" itemprop="url" rel="index">
+                    <span itemprop="name">typescript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="元组-Tuple"><a href="#元组-Tuple" class="headerlink" title="元组 Tuple"></a>元组 Tuple</h3><blockquote>
+<p>元组是js中不存在的数据类型，它表示一个已知元素数量和类型的数组，但是各个元素的类型不必相同</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let x: [string, number];</span><br><span class="line">x = [&quot;hello&quot;, 10];</span><br><span class="line">// 如果像以下这样定义的话tsc编译的话就会报错</span><br><span class="line">x = [10,&quot;hello&quot;];</span><br></pre></td></tr></table></figure>
+<h3 id="枚举-enum"><a href="#枚举-enum" class="headerlink" title="枚举 enum"></a>枚举 enum</h3><blockquote>
+<p>为一组数值赋予有好的名字</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">enum Color &#123;Red, Green, Blue&#125; // 定义一个枚举类型</span><br><span class="line">// 枚举类型默认是从0开始为元素编号的</span><br><span class="line">let c: Color = Color.Green;// c的值就是1</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>因为没有学过c#所以一开始理解enum的作用有点不理解，然后观察它的形式，发现<br>枚举类型就是一个没有只有key的对象，但是枚举类型上的key可以随意赋值。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">enum Color &#123; Red = 1, Green, Blue&#125;</span><br><span class="line">let c: Color = Color.Green;// 2</span><br><span class="line">// 给 Red自定义赋值之后，当前元素后面的枚举元素就是跟随变化</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可以手动进行全部赋值</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">enum Color &#123;Red = 1, Green = 3, Blue = 5&#125;;</span><br><span class="line">let c: Color = Color.Blue;// 5</span><br><span class="line">// 获取的值就是手动赋值之后的值</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>枚举的方便之处就是可以随意给名字进行赋值，同时也可以通过值查找名字</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">enum Color &#123;Red = 1, Green, Blue&#125;</span><br><span class="line">let colorName: string = Color[2]</span><br><span class="line">console.log(colorName);// &quot;Green&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="any"><a href="#any" class="headerlink" title="any"></a>any</h3><blockquote>
+<p>any指定后，可以定义任何数据类型</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let notSure = 4;// 数字</span><br><span class="line">notSure = &quot;string&quot;; // 字符串</span><br><span class="line">notSure = false; // 布尔</span><br><span class="line">// 可以用来定义包含不同数据类型的数组, 这个就非常有用了</span><br><span class="line"></span><br><span class="line">let list: any[]= [1,true,&apos;mike&apos;];</span><br></pre></td></tr></table></figure>
+<h3 id="void"><a href="#void" class="headerlink" title="void"></a>void</h3><blockquote>
+<p>表示没有任何数据类型</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 当一个函数没有返回值的时候，就需要定义 void</span><br><span class="line">function warnUser(): void &#123;</span><br><span class="line">    alert(&quot;waring message&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Null-Undefined"><a href="#Null-Undefined" class="headerlink" title="Null/Undefined"></a>Null/Undefined</h3><blockquote>
+<p>它们两个是所有类型的子类，也就是说可以赋值给所有的类型</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let n: null = null;</span><br><span class="line">let u: undefined = undefined;</span><br></pre></td></tr></table></figure>
+<h3 id="Never"><a href="#Never" class="headerlink" title="Never"></a>Never</h3><blockquote>
+<p>never表示那些用不存在的值的类型，例如：没有返回值的函数或者是箭头函数的返回值类型，never是任何类型的子类型，可以赋值给任何类型</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 返回never的函数必须存在无法到达的终点</span><br><span class="line">function error(message: string): never &#123; </span><br><span class="line">    throw new Error(message);</span><br><span class="line">&#125;</span><br><span class="line">// 推断的返回类型为 never</span><br><span class="line">function fail()&#123;</span><br><span class="line">    return error(&quot;Somthing failed&quot;)    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function infiniteLoop(): never&#123;</span><br><span class="line">    while(true)&#123;</span><br><span class="line">        ....</span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h3><blockquote>
+<p>跟js的类型检查是一样的，分为两种语法，但是因为jsx中只能用 as 所以我打算只用as</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let someValue: any = &quot;this is a string&quot;;</span><br><span class="line">let strLength: number = (someValue as string).length</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/09/canvas笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -835,7 +1016,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -846,7 +1027,7 @@
               
               <div class="site-state-item site-state-categories">
                 
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">categories</span>
                 
               </div>
