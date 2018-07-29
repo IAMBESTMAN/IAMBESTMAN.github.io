@@ -79,13 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="花解语">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="##什么是同源策略##  同源策略/SOP(Some Origin Policy)是一种约定，由网景公司1995年引入浏览器，他是浏览器最核心也是最基本的安全功能，如果缺少了同源策略，浏览器很容易受到XSS、CSRF等共计。所谓同源是指“协议+域名+端口”三者都相同，即便两个不同域名指向同一个ip也非同源。   同源策略限制以下几种行为： - 1、Cookie、LocationStorage无法读">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端跨域的九种解决方案">
+<meta property="og:url" content="http://yoursite.com/2018/07/29/前端跨域的九种解决方案/index.html">
 <meta property="og:site_name" content="花解语">
+<meta property="og:description" content="##什么是同源策略##  同源策略/SOP(Some Origin Policy)是一种约定，由网景公司1995年引入浏览器，他是浏览器最核心也是最基本的安全功能，如果缺少了同源策略，浏览器很容易受到XSS、CSRF等共计。所谓同源是指“协议+域名+端口”三者都相同，即便两个不同域名指向同一个ip也非同源。   同源策略限制以下几种行为： - 1、Cookie、LocationStorage无法读">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-07-29T09:35:06.718Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="花解语">
+<meta name="twitter:title" content="前端跨域的九种解决方案">
+<meta name="twitter:description" content="##什么是同源策略##  同源策略/SOP(Some Origin Policy)是一种约定，由网景公司1995年引入浏览器，他是浏览器最核心也是最基本的安全功能，如果缺少了同源策略，浏览器很容易受到XSS、CSRF等共计。所谓同源是指“协议+域名+端口”三者都相同，即便两个不同域名指向同一个ip也非同源。   同源策略限制以下几种行为： - 1、Cookie、LocationStorage无法读">
 
 
 
@@ -115,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/07/29/前端跨域的九种解决方案/"/>
 
 
 
 
 
-  <title>花解语</title>
+  <title>前端跨域的九种解决方案 | 花解语</title>
   
 
 
@@ -140,8 +144,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -214,9 +217,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -246,9 +249,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/29/前端跨域的九种解决方案/" itemprop="url">前端跨域的九种解决方案</a></h1>
+          <h1 class="post-title" itemprop="name headline">前端跨域的九种解决方案</h1>
         
 
         <div class="post-meta">
@@ -320,9 +321,7 @@
       
 
       
-        
-          
-            <p>##什么是同源策略##</p>
+        <p>##什么是同源策略##</p>
 <blockquote>
 <p>同源策略/SOP(Some Origin Policy)是一种约定，由网景公司1995年引入浏览器，他是浏览器最核心也是最基本的安全功能，如果缺少了同源策略，浏览器很容易受到XSS、CSRF等共计。所谓同源是指“协议+域名+端口”三者都相同，即便两个不同域名指向同一个ip也非同源。</p>
 </blockquote>
@@ -481,8 +480,6 @@
 <p>实现思路：通过nginx配置一个代理服务器（域名与demo1相同，端口不同）做跳板机，反向代理访问demo2接口，并且可以顺便修改cookie中demo信息，方便当前域cookie写入，实现跨域登录。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen       81;</span><br><span class="line">    server_name  www.demo1.com;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        proxy_pass   http://www.demo2.com:8080;  #反向代理</span><br><span class="line">        proxy_cookie_demo www.demo2.com www.demo1.com; #修改cookie里域名</span><br><span class="line">        index  index.html index.htm;</span><br><span class="line"></span><br><span class="line">        # 当用webpack-dev-server等中间件代理接口访问nignx时，此时无浏览器参与，故没有同源限制，下面的跨域配置可不启用</span><br><span class="line">        add_header Access-Control-Allow-Origin http://www.demo1.com;  #当前端只跨域不带cookie时，可为*</span><br><span class="line">        add_header Access-Control-Allow-Credentials true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-          
-        
       
     </div>
     
@@ -499,193 +496,28 @@
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/06/typeScript笔记1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="huajieyu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="花解语">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/06/typeScript笔记1/" itemprop="url">typeSctipt基础笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-06T15:10:41+08:00">
-                2018-06-06
-              </time>
+              <a href="/2018/06/06/typeScript笔记1/" rel="next" title="typeSctipt基础笔记">
+                <i class="fa fa-chevron-left"></i> typeSctipt基础笔记
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/typescript/" itemprop="url" rel="index">
-                    <span itemprop="name">typescript</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <h3 id="元组-Tuple"><a href="#元组-Tuple" class="headerlink" title="元组 Tuple"></a>元组 Tuple</h3><blockquote>
-<p>元组是js中不存在的数据类型，它表示一个已知元素数量和类型的数组，但是各个元素的类型不必相同</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let x: [string, number];</span><br><span class="line">x = [&quot;hello&quot;, 10];</span><br><span class="line">// 如果像以下这样定义的话tsc编译的话就会报错</span><br><span class="line">x = [10,&quot;hello&quot;];</span><br></pre></td></tr></table></figure>
-<h3 id="枚举-enum"><a href="#枚举-enum" class="headerlink" title="枚举 enum"></a>枚举 enum</h3><blockquote>
-<p>为一组数值赋予有好的名字</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">enum Color &#123;Red, Green, Blue&#125; // 定义一个枚举类型</span><br><span class="line">// 枚举类型默认是从0开始为元素编号的</span><br><span class="line">let c: Color = Color.Green;// c的值就是1</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>因为没有学过c#所以一开始理解enum的作用有点不理解，然后观察它的形式，发现<br>枚举类型就是一个没有只有key的对象，但是枚举类型上的key可以随意赋值。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">enum Color &#123; Red = 1, Green, Blue&#125;</span><br><span class="line">let c: Color = Color.Green;// 2</span><br><span class="line">// 给 Red自定义赋值之后，当前元素后面的枚举元素就是跟随变化</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>可以手动进行全部赋值</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">enum Color &#123;Red = 1, Green = 3, Blue = 5&#125;;</span><br><span class="line">let c: Color = Color.Blue;// 5</span><br><span class="line">// 获取的值就是手动赋值之后的值</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>枚举的方便之处就是可以随意给名字进行赋值，同时也可以通过值查找名字</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">enum Color &#123;Red = 1, Green, Blue&#125;</span><br><span class="line">let colorName: string = Color[2]</span><br><span class="line">console.log(colorName);// &quot;Green&quot;</span><br></pre></td></tr></table></figure>
-<h3 id="any"><a href="#any" class="headerlink" title="any"></a>any</h3><blockquote>
-<p>any指定后，可以定义任何数据类型</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let notSure = 4;// 数字</span><br><span class="line">notSure = &quot;string&quot;; // 字符串</span><br><span class="line">notSure = false; // 布尔</span><br><span class="line">// 可以用来定义包含不同数据类型的数组, 这个就非常有用了</span><br><span class="line"></span><br><span class="line">let list: any[]= [1,true,&apos;mike&apos;];</span><br></pre></td></tr></table></figure>
-<h3 id="void"><a href="#void" class="headerlink" title="void"></a>void</h3><blockquote>
-<p>表示没有任何数据类型</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 当一个函数没有返回值的时候，就需要定义 void</span><br><span class="line">function warnUser(): void &#123;</span><br><span class="line">    alert(&quot;waring message&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Null-Undefined"><a href="#Null-Undefined" class="headerlink" title="Null/Undefined"></a>Null/Undefined</h3><blockquote>
-<p>它们两个是所有类型的子类，也就是说可以赋值给所有的类型</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let n: null = null;</span><br><span class="line">let u: undefined = undefined;</span><br></pre></td></tr></table></figure>
-<h3 id="Never"><a href="#Never" class="headerlink" title="Never"></a>Never</h3><blockquote>
-<p>never表示那些用不存在的值的类型，例如：没有返回值的函数或者是箭头函数的返回值类型，never是任何类型的子类型，可以赋值给任何类型</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 返回never的函数必须存在无法到达的终点</span><br><span class="line">function error(message: string): never &#123; </span><br><span class="line">    throw new Error(message);</span><br><span class="line">&#125;</span><br><span class="line">// 推断的返回类型为 never</span><br><span class="line">function fail()&#123;</span><br><span class="line">    return error(&quot;Somthing failed&quot;)    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function infiniteLoop(): never&#123;</span><br><span class="line">    while(true)&#123;</span><br><span class="line">        ....</span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h3><blockquote>
-<p>跟js的类型检查是一样的，分为两种语法，但是因为jsx中只能用 as 所以我打算只用as</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let someValue: any = &quot;this is a string&quot;;</span><br><span class="line">let strLength: number = (someValue as string).length</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -695,343 +527,11 @@
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/09/canvas笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="huajieyu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="花解语">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/09/canvas笔记/" itemprop="url">canvas笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-09T16:33:42+08:00">
-                2018-05-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/H5/" itemprop="url" rel="index">
-                    <span itemprop="name">H5</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="canvas声明和获取"><a href="#canvas声明和获取" class="headerlink" title="canvas声明和获取"></a>canvas声明和获取</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;canvas id = &apos;myCanvas&apos;&gt;&lt;/canvas&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        let canvas= document.getELementById(&apos;myCanvas&apos;);</span><br><span class="line">        let ctx = canvas.getContext(&apos;2d&apos;);</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
-<p>getContext 字面上的意思是获取环境，canvas.getContext(‘2d’)的意思就是获取canvas的2d绘图环境。</p>
-<h3 id="小程序中的canvas获取"><a href="#小程序中的canvas获取" class="headerlink" title="小程序中的canvas获取"></a>小程序中的canvas获取</h3><p>在小程序中因为没有DOM和BOM,所以就没有DOM操作，所有的操作只能通过微信的API</p>
-<blockquote>
-<p> wx.createCanvas()<br> wx.createImage()</p>
-</blockquote>
-<p>微信小游戏封装了一个document,可以像原生js那样创建对象<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">var document = &#123;</span><br><span class="line">    createELement: function (tagName) &#123;</span><br><span class="line">        tagName = tagName.tolowerCase();</span><br><span class="line">        if (tagName === &apos;canvas&apos;) &#123;</span><br><span class="line">            return wx.createCanvas()</span><br><span class="line">        &#125; else if (tagName === &apos;image&apos;) &#123;</span><br><span class="line">            return wx.createImage()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">var canvas = document.createElement(&apos;canvas&apos;);</span><br><span class="line">var image = document.createElement(&apos;image&apos;);</span><br><span class="line"></span><br><span class="line">// 实现new Image()</span><br><span class="line">function Image () &#123;</span><br><span class="line">   return wx.createImage()</span><br><span class="line">&#125;</span><br><span class="line">var img = new Image();</span><br><span class="line">// 创建一个image对象</span><br></pre></td></tr></table></figure></p>
-<p>微信将这些方法已经封装在Adapter中，这个微信在以后不会进行更新了，需要自己封装</p>
-<blockquote>
-<p>因为在用微信小游戏API开发小游戏，所以这次cnavas笔记不会循规蹈矩的一个方法一个方法的记录，用到了那个我就记录那个。</p>
-</blockquote>
-<h3 id="绘制矩形"><a href="#绘制矩形" class="headerlink" title="绘制矩形"></a>绘制矩形</h3><blockquote>
-<p>ctx.fillRect(x,y,w,h)   x, y 是坐标位置 w, h 是矩形的宽高</p>
-</blockquote>
-<blockquote>
-<p>ctx.fillStyle=”0,0,0”设置填充颜色</p>
-</blockquote>
-<blockquote>
-<p>ctx.globalAlpha = 0.3 设置透明度</p>
-</blockquote>
-<p>绘制了一个背景颜色是黑色，透明度是0.3的矩形 一个简单的遮罩层就绘制完成了，当然可以获取全局的高度，宽度，然遮罩层布满全局<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var screenWidth = window.innerWidth;</span><br><span class="line">var screenHeight = window.innerHeight;</span><br></pre></td></tr></table></figure></p>
-<h3 id="绘制图片"><a href="#绘制图片" class="headerlink" title="绘制图片"></a>绘制图片</h3><p>在小游戏中我想将开始游戏按钮绘制在遮罩层上，当时一直没有绘制成功，也没有报错，一开始以为是代码写错了，但是看了好久没有问题，就想到是不是图片还有没有加载完成得原因。试了试onload再进行绘制图片，果然成功了。嘿嘿<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">drawToCanvas(ctx) &#123;</span><br><span class="line">    const that = this;</span><br><span class="line">    this.image.onload = function () &#123;</span><br><span class="line">        ctx.drawImage(</span><br><span class="line">            that.image,</span><br><span class="line">            that.sx,</span><br><span class="line">            that.sy,</span><br><span class="line">            that.width,</span><br><span class="line">            that.height</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>我一开始是这样写的，图片绘制不上，但是在小游戏demo中这样写是可以成功的, 这样写不成功的原因是因为image的创建是异步的，js又是按照顺序执行的，所以image还没有创建完成就进行绘制并不能绘制成功。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">drawToCanvas(ctx) &#123;</span><br><span class="line">    ctx.drawImage(</span><br><span class="line">        that.image,</span><br><span class="line">        that.sx,</span><br><span class="line">        that.sy,</span><br><span class="line">        that.width,</span><br><span class="line">        that.height</span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="绘制矩形-1"><a href="#绘制矩形-1" class="headerlink" title="绘制矩形"></a>绘制矩形</h3><p>我绘制了一个矩形，将它作为游戏开始的遮罩层，增加了透明度，一开始用的是<code>ctx.globalAlpa</code>但是这个方法回给全局增加遮罩，并不是我想要的,我的用的rgba给当前矩形增加透明度</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 绘制矩形默认是填充的矩形</span><br><span class="line">ctx.fillStyle=&quot;rgba(0,0,0,.3)&quot;;</span><br><span class="line">ctx.fillRect(0,0,100,100);// x,y,width,height</span><br><span class="line"></span><br><span class="line">// 绘制矩形 默认不填充颜色笔触是黑色</span><br><span class="line">context.strokeRect(x,y,width,height);</span><br><span class="line"></span><br><span class="line"> ctx.rect(20,20,150,100);</span><br><span class="line"> ctx.stroke(); // 绘制已经定义的路径</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>ctx.clearRect(0,0,100,100); 在给定的矩形内清除指定的像素</p>
-</blockquote>
-<h3 id="绘制文字"><a href="#绘制文字" class="headerlink" title="绘制文字"></a>绘制文字</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 里面有三个长用的属性 style variant(font-family) weight</span><br><span class="line">ctx.font=&quot;14px &apos;微软雅黑&apos; bold&quot;;</span><br><span class="line">ctx.textAlign = &quot;center&quot;;</span><br><span class="line">ctx.fillText(&quot;哈哈哈测试&quot;,30,30);</span><br><span class="line"></span><br><span class="line">// 挥着空心文字</span><br><span class="line">ctx.strokeStyle=&quot;Green&quot;;</span><br><span class="line">ctx.strokeText(&apos;这是文字&apos;,30,30)</span><br></pre></td></tr></table></figure>
-
-          
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/02/new Object 和 Object.create的区别/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="huajieyu">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="花解语">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/02/new Object 和 Object.create的区别/" itemprop="url">new Object 和 Object.create的区别</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-02T18:06:57+08:00">
-                2018-05-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近正在看es6的class语法，看到了一个示例用了<code>Object.create()</code>,就想到为什么不用<code>new Object</code>于是就有了看一下<code>Object.create()</code>和<code>new Object</code>的想法。</p>
-<blockquote>
-<p>为了方便书写 <code>Object.create()</code> 用create代替，<code>new Object</code>用new代替</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var Base = function () &#123;&#125;</span><br><span class="line">var o1 = new Base();</span><br><span class="line">var o2 = Object.create(Base);</span><br><span class="line">console.log(o1); // Base()</span><br><span class="line">console.log(o2); // Function()</span><br></pre></td></tr></table></figure>
-<p>创建了一个名为Base的构造函数，分别用 new 和 create创建了两个实例。打印的结果出乎意。o1实例的<code>Base类</code> o2是<code>Function类</code></p>
-<p>o1的<code>__proto__</code>指向的是Base类的prototype,Base类的<code>__proto__</code>指向的是Object这个基类的原型.</p>
-<p>o2指向的是Function的<code>prototype</code>, Function本身就是基类.</p>
-<p><strong><strong>那么这两个具体的区别是什么那？</strong></strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var Base = function () &#123;&#125;</span><br><span class="line">Base.prototype = &#123;</span><br><span class="line">  say: function () &#123;</span><br><span class="line">    console.log(&apos;hello&apos;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">var o1 = new Base();</span><br><span class="line"></span><br><span class="line">var o2 = Object.create(Base);</span><br><span class="line"></span><br><span class="line">o1.say(); // hello</span><br><span class="line">o2.say(); // o2.say is not a function</span><br></pre></td></tr></table></figure>
-<p>为<code>Base</code>构造函数的<code>prototype</code>增加一个say方法，o1、o2实例分别执行这个方法。<br><code>o1.say()</code> 执行的结果是 hello ，<code>o2.say()</code>抛错说 <code>o2.say</code> 不是一个函数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var Base = function () &#123;</span><br><span class="line">  this.a = 1;</span><br><span class="line">&#125;</span><br><span class="line">Base.prototype = &#123;</span><br><span class="line">  say: function () &#123;</span><br><span class="line">    console.log(&apos;hello&apos;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">var o1 = new Base();</span><br><span class="line"></span><br><span class="line">var o2 = Object.create(Base);</span><br><span class="line">console.log(o1.__proto__); // &#123; say: [Function: say] &#125;</span><br><span class="line">console.log(o2.__proto__); // [Function: Base]</span><br></pre></td></tr></table></figure>
-<p>然后我分别打印了两个实例的<code>__proto__</code>，发现两个实例的<code>__proto__</code>的指向不是一样的，o1的指向是Base构造函数的原型，而o2的指向是构造函数本身。由此就可以明白了为什么<code>o2.say()</code>不是一个函数了，o2的<code>prototype</code>是Base构造函数，而Base的<code>__proto__</code>的指向是<code>Function</code>这个基类</p>
-<p><img src="http://img.hb.aicdn.com/61dc3eb196d0b37d561e7eeee9a3bb3deffdadf332c9-TgEc66_fw658" alt="avatar"></p>
-<p>这个是我分析后画出来的原型图，通过这个原型图可以看出，o1实例指向的是Base这个构造函数的原型，o2指向的是这个构造函数，o1继承了Base<code>prototype</code>上的属性和方法，而o2直接通过<code>__proto__</code>查找Base的所属类的原型也就是<code>Function</code>,并没有继承任何方法。</p>
-<p><strong><strong>为什么会出现这种情况那？</strong></strong></p>
-<blockquote>
-<p>分析一下Object.create的实现 方法</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Object.create = function(o) &#123;</span><br><span class="line">    var F = function() &#123;&#125;;</span><br><span class="line">    F.prototype = o;</span><br><span class="line">    return new F;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>从Object.create的实现方式可以看出 ，实现方式是先创建一个构造函数，然后让这个对象的原型等于传递进来的方法，然后在new一个新的实例。问什么会和 new 创建的方法不一样的，只要是因为新的实例的原型指向的是构造函数，并不是构造函数的原型</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
@@ -1039,6 +539,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -1059,8 +563,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -1111,6 +624,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#四、window-name-iframe跨域"><span class="nav-number">1.</span> <span class="nav-text">四、window.name + iframe跨域</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1251,6 +780,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
