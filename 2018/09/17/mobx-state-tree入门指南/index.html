@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="入门指南本教程将通过构建一个能够给用户分配待办事项的 TODO 应用来为你介绍 mobx-state-tree (MST) 的基础知识。 预备知识开始此教程之前，我假设你已经对 React 有了基础的了解。否则，建议首先去阅读一下这份 React 教程。 我需要提前学习 MobX 吗?MST 深度依赖于 MobX。因此，如果你使用过 MobX 的话，将对你处理一些复杂的情况和怎样把数据与 Reac">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mobx-state-tree入门指南（转载）">
+<meta property="og:url" content="http://yoursite.com/2018/09/17/mobx-state-tree入门指南/index.html">
+<meta property="og:site_name" content="花解语">
+<meta property="og:description" content="入门指南本教程将通过构建一个能够给用户分配待办事项的 TODO 应用来为你介绍 mobx-state-tree (MST) 的基础知识。 预备知识开始此教程之前，我假设你已经对 React 有了基础的了解。否则，建议首先去阅读一下这份 React 教程。 我需要提前学习 MobX 吗?MST 深度依赖于 MobX。因此，如果你使用过 MobX 的话，将对你处理一些复杂的情况和怎样把数据与 Reac">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-01-30T15:03:47.382Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mobx-state-tree入门指南（转载）">
+<meta name="twitter:description" content="入门指南本教程将通过构建一个能够给用户分配待办事项的 TODO 应用来为你介绍 mobx-state-tree (MST) 的基础知识。 预备知识开始此教程之前，我假设你已经对 React 有了基础的了解。否则，建议首先去阅读一下这份 React 教程。 我需要提前学习 MobX 吗?MST 深度依赖于 MobX。因此，如果你使用过 MobX 的话，将对你处理一些复杂的情况和怎样把数据与 Reac">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/17/mobx-state-tree入门指南/"/>
+
+
+
+
+
+  <title>mobx-state-tree入门指南（转载） | 花解语</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">花解语</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/17/mobx-state-tree入门指南/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="huajieyu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="花解语">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">mobx-state-tree入门指南（转载）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-17T14:49:48+08:00">
+                2018-09-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="入门指南"><a href="#入门指南" class="headerlink" title="入门指南"></a>入门指南</h1><p>本教程将通过构建一个能够给用户分配待办事项的 TODO 应用来为你介绍 mobx-state-tree (MST) 的基础知识。</p>
+<h2 id="预备知识"><a href="#预备知识" class="headerlink" title="预备知识"></a>预备知识</h2><p>开始此教程之前，我假设你已经对 React 有了基础的了解。否则，建议首先去阅读一下这份 <a href="https://facebook.github.io/react/tutorial/tutorial.html" target="_blank" rel="noopener">React 教程</a>。</p>
+<h3 id="我需要提前学习-MobX-吗"><a href="#我需要提前学习-MobX-吗" class="headerlink" title="我需要提前学习 MobX 吗?"></a>我需要提前学习 MobX 吗?</h3><p>MST 深度依赖于 MobX。因此，如果你使用过 MobX 的话，将对你处理一些复杂的情况和怎样把数据与 React 组件连接起来非常有帮助。但是，如果你没有使用过 MobX 也没关系，因为使用 MST 不需要任何 MobX API 方面的知识。</p>
+<h2 id="如何跟随这门教程"><a href="#如何跟随这门教程" class="headerlink" title="如何跟随这门教程"></a>如何跟随这门教程</h2><p>你可以使用 <a href="https://codesandbox.io/" target="_blank" rel="noopener">codesandbox</a> 在浏览器中直接写代码，也可以使用你偏爱的某种编辑器（例如：VSCode）都是可以的。</p>
+<h3 id="在浏览器中写代码"><a href="#在浏览器中写代码" class="headerlink" title="在浏览器中写代码"></a>在浏览器中写代码</h3><p>我们为每一个实例都提供了 codesandbox 链接。你可以按照知识点一步接一步的去学习教程，如果在什么地方卡住了，可以直接参考下一个实例链接哈 :)。</p>
+<h3 id="在编辑器中写代码"><a href="#在编辑器中写代码" class="headerlink" title="在编辑器中写代码"></a>在编辑器中写代码</h3><p>配置 React 项目的开发环境是一件让人觉得很繁琐的事情，你可能需要引入各种编译器、打包器等等。幸好有<code>create-react-app</code>这样的脚手架使这种事情简单到只需要在终端中输入几条命令即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g create-react-app</span><br><span class="line">create-react-app mst-todo</span><br></pre></td></tr></table></figure>
+<p>你需要安装一下 mobx、mobx-react 和 mobx-state-tree。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install mobx mobx-react mobx-state-tree --save</span><br></pre></td></tr></table></figure></p>
+<p>然后执行<code>npm run start</code>之后，一个基础的 React 页面就会展示在你面前。</p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>mobx-state-tree is a state container that combines the simplicity and ease of mutable data with the traceability of immutable data and the reactiveness and performance of observable data.</p>
+<p>如果你对这个说明很困惑，不用担心。让我们一起一步步地来探索它。</p>
+<h2 id="入门指南-1"><a href="#入门指南-1" class="headerlink" title="入门指南"></a>入门指南</h2><p>When building applications with MST, the first exercise that will help you building your application is thinking which is the minimal set of entities and their relative attributes of our application.</p>
+<p>在我们的示例应用中处理的是 todo 代办事项，因此我们需要一个 todo 实体，它包含 name 和 todo 两个属性，并且 todo 属性有两种状态：完成与未完成。我们还需要一个 user 实体，用来分配代办事项。</p>
+<h2 id="创建第一个-model"><a href="#创建第一个-model" class="headerlink" title="创建第一个 model"></a>创建第一个 model</h2><p>MST 的最主要概念就是一个动态树。这个树结构由可变的，但是受严格的运行时类型信息保护的对象组成。换句话说，每个树都是由模型（类型信息）和状态（数据）组成的。从这个动态树中可以自动生成不可变的、结构上共享的快照。</p>
+<p>这意味着如果想让应用运行起来，我们需要向 MST 描述清楚我们的实体模型。知道了这些信息，MST 就可以自动为我们生成所有的边界，以避免犯一些愚蠢的错误。比如，把字符串赋值给了价格字段或者把布尔值赋值给了本来期望是数组的字段。</p>
+<p>使用 MST 定义 model 实体的一个最简单方式就是提供一个将来会被用作默认值的数据给 types.model 方法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; types &#125; <span class="keyword">from</span> <span class="string">"mobx-state-tree"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Todo = types.model(&#123;</span><br><span class="line">    name: <span class="string">""</span>,</span><br><span class="line">    done: <span class="literal">false</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> User = types.model(&#123;</span><br><span class="line">    name: <span class="string">""</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><a href="https://codesandbox.io/s/98x2n959ky" target="_blank" rel="noopener">View sample in playground</a></p>
+<p>上面的代码会创建两种类型数据，分别是 User 和 Todo 类型。但我们前面说过，一个 model tree 是由类型信息和状态组成的，那我们怎样定义一个 Todo 和 User 类型的实例呢？</p>
+<h2 id="创建-model-实例-tree-nodes"><a href="#创建-model-实例-tree-nodes" class="headerlink" title="创建 model 实例 (tree nodes)"></a>创建 model 实例 (tree nodes)</h2><p>可以很容易的在 User 和 Todo 类型上调用<code>.create()</code>方法来完成这件事情。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; types &#125; <span class="keyword">from</span> <span class="string">"mobx-state-tree"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Todo = types.model(&#123;</span><br><span class="line">    name: <span class="string">""</span>,</span><br><span class="line">    done: <span class="literal">false</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> User = types.model(&#123;</span><br><span class="line">    name: <span class="string">""</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> john = User.create()</span><br><span class="line"><span class="keyword">const</span> eat = Todo.create()</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"John:"</span>, john.toJSON())</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Eat TODO:"</span>, eat.toJSON())</span><br></pre></td></tr></table></figure>
+<p><a href="https://codesandbox.io/s/6jo1o9n9qk" target="_blank" rel="noopener">View sample in playground</a></p>
+<p>正如你所见，使用 models 可以确保所有被定义字段都是预先定义过的默认值。但如果你想在创建 model 实例时改变它的值，可以简单的给 create 方法传递一个对象即可。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> eat = Todo.create(&#123; <span class="attr">name</span>: <span class="string">"eat"</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Eat TODO:"</span>, eat.toJSON()) <span class="comment">// =&gt; will print &#123;name: "eat", done: false&#125;</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://codesandbox.io/s/ymqpj71oj9" target="_blank" rel="noopener">View sample in playground</a></p>
+<h2 id="遇见-types"><a href="#遇见-types" class="headerlink" title="遇见 types"></a>遇见 types</h2><p>当你运行下面代码时，发现它会抛出错误异常：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> eat = Todo.create(&#123; <span class="attr">name</span>: <span class="string">"eat"</span>, <span class="attr">done</span>: <span class="number">1</span> &#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Error: [mobx-state-tree] Error while converting `&#123;&quot;name&quot;:&quot;eat&quot;,&quot;done&quot;:1&#125;` to `AnonymousModel`:</span><br><span class="line">at path &quot;/done&quot; value `1` is not assignable to type: `boolean`.</span><br></pre></td></tr></table></figure>
+<p>这是因为 MST 的节点都是强类型的，你不能给一个布尔类型提供一个数值类型的值。这种特性对构建应用非常有好处，可以保证你的状态类型始终如一，不会有非法的状态类型插入进来。下面是定义 model 的一种快捷方式。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Todo = types.model(&#123;</span><br><span class="line">    name: types.optional(types.string, <span class="string">""</span>),</span><br><span class="line">    done: types.optional(types.boolean, <span class="literal">false</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> User = types.model(&#123;</span><br><span class="line">    name: types.optional(types.string, <span class="string">""</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><a href="https://codesandbox.io/s/j27j41828v" target="_blank" rel="noopener">View sample in playground</a></p>
+<p>MST 中的命名空间类型还内置了很多实用的类型，例如：array、map、maybe、refinements 和 unions。如果你对他们感兴趣，可以去查阅 api 文档。我们现在将 types 和定义的一个 RootStore 结合起来用于约束 users 和 todos。</p>
+<p>注意：如果你没有给<code>type</code>的<code>create</code>方法传递值，那么<code>types.optional</code>的第二个参数值就不能省略。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> User = types.model(&#123;</span><br><span class="line">    name: types.optional(types.string, <span class="string">""</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>比如在上面这段代码中，我们给<code>name</code>属性定义的是<code>string</code>类型值，假如你省略<code>optional</code>函数的第二个参数之后。<code>name</code>的默认值就变成了 undefined ，并不是<code>string</code>类型，代码也就自然会抛出异常了。</p>
+<p>例如，你想在调用<code>create</code>时让 Todo 的 name 属性值成为必填项，可以去掉<code>optional</code>方法并且把<code>types.string</code>传进去就可以了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; types &#125; <span class="keyword">from</span> <span class="string">"mobx-state-tree"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Todo = types.model(&#123;</span><br><span class="line">    name: types.optional(types.string, <span class="string">""</span>),</span><br><span class="line">    done: types.optional(types.boolean, <span class="literal">false</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> User = types.model(&#123;</span><br><span class="line">    name: types.optional(types.string, <span class="string">""</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> RootStore = types.model(&#123;</span><br><span class="line">    users: types.map(User),</span><br><span class="line">    todos: types.optional(types.map(Todo), &#123;&#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> store = RootStore.create(&#123;</span><br><span class="line">    users: &#123; &#125; <span class="comment">// users is required here because it's not marked as optional</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><a href="https://codesandbox.io/s/5wyx1xvvj4" target="_blank" rel="noopener">View sample in playground</a></p>
+<h2 id="修改数据"><a href="#修改数据" class="headerlink" title="修改数据"></a>修改数据</h2><p>MST 的树节点（也就是 model 实例）可以使用 action 来修改它。可以很容易的通过在<code>types</code>上调用<code>action</code>方法，给它传递一个回调函数，回调函数的参数为 model 实例，然后在回调函数内部将修改之后的 model 实例返回就可以了。 </p>
+<p>如下示例中，在 Todo 类型上定义了<code>action</code>方法，你就可以在它里面通过提供的 Todo 实例来切换<code>done</code>的状态和设置<code>name</code>属性值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Todo = types.model(&#123;</span><br><span class="line">    name: types.optional(types.string, <span class="string">""</span>),</span><br><span class="line">    done: types.optional(types.boolean, <span class="literal">false</span>)</span><br><span class="line">&#125;).actions(<span class="function"><span class="params">self</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">setName</span>(<span class="params">newName</span>) </span>&#123;</span><br><span class="line">        self.name = newName</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">toggle</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        self.done = !self.done</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;setName, toggle&#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> User = types.model(&#123;</span><br><span class="line">    name: types.optional(types.string, <span class="string">""</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> RootStore = types.model(&#123;</span><br><span class="line">    users: types.map(User),</span><br><span class="line">    todos: types.optional(types.map(Todo), &#123;&#125;)</span><br><span class="line">&#125;).actions(<span class="function"><span class="params">self</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">addTodo</span>(<span class="params">id, name</span>) </span>&#123;</span><br><span class="line">        self.todos.set(id, Todo.create(&#123; name &#125;))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;addTodo&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><a href="https://codesandbox.io/s/928l6pw7pr" target="_blank" rel="noopener">View sample in playground</a></p>
+<p>这里你需要知道，<code>self</code>的对象结构就是由你创建的 model 实例构成的。并且<code>action</code>方法已经被正确地绑定了<code>this</code>作用域，所以<code>self</code>指向的就是上面定义的 model 实例。</p>
+<p>通过调用这些<code>action</code>方法就可以如此简单的实现 js 类，然后通过一个 model 实例来调用它们的方法了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">store.addTodo(<span class="number">1</span>, <span class="string">"Eat a cake"</span>)</span><br><span class="line">store.todos.get(<span class="number">1</span>).toggle()</span><br></pre></td></tr></table></figure>
+<p><a href="https://codesandbox.io/s/928l6pw7pr" target="_blank" rel="noopener">View sample in playground</a></p>
+<h2 id="强大的快照！"><a href="#强大的快照！" class="headerlink" title="强大的快照！"></a>强大的快照！</h2><p>Dealing with mutable data and objects makes it easy to change data on the fly, but on the other hand it makes testing hard. Immutable data makes that very easy.  Is there a way to have the best of both worlds? Nature is a great example of that. Beings are living and mutable, but we may eternalize nature’s beauty by taking awesome snapshots. Can we do the same with the state of our application?</p>
+<p>Thanks to MST’s knowledge of models and relative property types, MST is able to generate serializable snapshots of our store! You can easily get a snapshot of the store by using the <code>getSnapshot</code> function exported by the MST package.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(getSnapshot(store))</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">&#123;</span></span><br><span class="line"><span class="comment">    "users": &#123;&#125;,</span></span><br><span class="line"><span class="comment">    "todos": &#123;</span></span><br><span class="line"><span class="comment">        "1": &#123;</span></span><br><span class="line"><span class="comment">            "name": "Eat a cake",</span></span><br><span class="line"><span class="comment">            "done": true</span></span><br><span class="line"><span class="comment">        &#125;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>注意：你在以前教程中用过的<code>toJSON()</code>方法就是<code>getSnapshot</code>的快捷方式。</p>
+<p>Because the nature of state is mutable, a snapshot will be emitted whenever the state is mutated! To listen to those new snapshot, you can use <code>onSnapshot(store, snapshot =&gt; console.log(snapshot))</code> to log them as they are emitted!</p>
+<h2 id="从快照到-model"><a href="#从快照到-model" class="headerlink" title="从快照到 model"></a>从快照到 model</h2><p>正如我们所见，从一个 model 实例获取一个快照是相当的简单，但是能不能很灵巧的把一个快照恢复成一个 model 呢？当然是可以的。</p>
+<p>That basically means that you can restore your objects with your custom methods by just knowing the type of the tree and its snapshot! 你有两种方法可以完成这个操作。</p>
+<p>第一种方法就是创建一个新的 model 实例，然后把快照作为参数传递给它。That means that you will need to update all your store references, if used in React components, to the new one.</p>
+<p>第二种方法是通过把快照应用到一个已存在的 model 实例上，来避免出现这种引用问题。属性会被更新，但是存储引用不会发生变化。这将会触发一个被称为“调和”的操作，我们在后面会讨论这个。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1st</span></span><br><span class="line"><span class="keyword">const</span> store = RootStore.create(&#123;</span><br><span class="line">    <span class="string">"users"</span>: &#123;&#125;,</span><br><span class="line">    <span class="string">"todos"</span>: &#123;</span><br><span class="line">        <span class="string">"1"</span>: &#123;</span><br><span class="line">            <span class="string">"name"</span>: <span class="string">"Eat a cake"</span>,</span><br><span class="line">            <span class="string">"done"</span>: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2nd</span></span><br><span class="line">applySnapshot(store, &#123;</span><br><span class="line">    <span class="string">"users"</span>: &#123;&#125;,</span><br><span class="line">    <span class="string">"todos"</span>: &#123;</span><br><span class="line">        <span class="string">"1"</span>: &#123;</span><br><span class="line">            <span class="string">"name"</span>: <span class="string">"Eat a cake"</span>,</span><br><span class="line">            <span class="string">"done"</span>: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><a href="https://codesandbox.io/s/xjm99kkopp" target="_blank" rel="noopener">View sample in playground</a></p>
+<h2 id="时间旅行"><a href="#时间旅行" class="headerlink" title="时间旅行"></a>时间旅行</h2><p>获取和应用快照的能力使得用户能够很容易的实现时间旅行。你只需要基于快照的监听，存储并重新应用他们就可以实现时间旅行。</p>
+<p>下面是一个简单的实现：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; applySnapshot, onSnapshot &#125; <span class="keyword">from</span> <span class="string">"mobx-state-tree"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> states = []</span><br><span class="line"><span class="keyword">var</span> currentFrame = <span class="number">-1</span></span><br><span class="line"></span><br><span class="line">onSnapshot(store, snapshot =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (currentFrame === states.length - <span class="number">1</span>) &#123;</span><br><span class="line">        currentFrame++</span><br><span class="line">        states.push(snapshot)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">previousState</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (currentFrame === <span class="number">0</span>) <span class="keyword">return</span></span><br><span class="line">    currentFrame--</span><br><span class="line">    applySnapshot(store, states[currentFrame])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">nextState</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (currentFrame === states.length - <span class="number">1</span>) <span class="keyword">return</span></span><br><span class="line">    currentFrame++</span><br><span class="line">    applySnapshot(store, states[currentFrame])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="和界面关联起来"><a href="#和界面关联起来" class="headerlink" title="和界面关联起来"></a>和界面关联起来</h2><p>MST 完全兼容 MobX 的 autorun、reaction、observe 等功能特性。你可以使用 mobx-react 将 MST 的 store 和 React 组件关联起来，更多详细信息可查阅 mobx-react 的文档。MST 可以很容易的和任何视图引擎整合起来，只要对快照进行监听并进行相应的更新即可。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> App = observer(<span class="function"><span class="params">props</span> =&gt;</span> &lt;div&gt;</span><br><span class="line">    &lt;button onClick=&#123;e =&gt; props.store.addTodo(randomId(), <span class="string">'New Task'</span>)&#125;&gt;Add Task&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">    &#123;props.store.todos.values().map(todo =&gt;</span></span><br><span class="line"><span class="regexp">        &lt;div&gt;</span></span><br><span class="line"><span class="regexp">            &lt;input type="checkbox" checked=&#123;todo.done&#125; onChange=&#123;e =&gt; todo.toggle()&#125; /</span>&gt;</span><br><span class="line">            &lt;input type=<span class="string">"text"</span> value=&#123;todo.name&#125; onChange=&#123;e =&gt; todo.setName(e.target.value)&#125; /&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    )&#125;</span></span><br><span class="line"><span class="regexp">&lt;/</span>div&gt;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p><a href="https://codesandbox.io/s/r54o5pp8z4" target="_blank" rel="noopener">View sample in playground</a></p>
+<h2 id="提高渲染性能"><a href="#提高渲染性能" class="headerlink" title="提高渲染性能"></a>提高渲染性能</h2><p>如果你已经安装了 React 开发工具，并且勾选上“Highlight Updates”选项，你会发现无论是切换 todo 的状态还是修改它的名称都会导致整个应用被重新渲染。这个太丢人了，因为如果你的列表中存在大量 todo 的话，就会产生性能问题。</p>
+<p>MobX 提供了颗粒级的更新能力，可以很容易的修复此类问题。你只需要把单个的 todo 渲染分离到一个单独的组件里，这时再改变 todo 的数据就只会重新渲染此单独组件了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> TodoView = observer(<span class="function"><span class="params">props</span> =&gt;</span></span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &lt;input type=<span class="string">"checkbox"</span> checked=&#123;props.todo.done&#125; onChange=&#123;e =&gt; props.todo.toggle()&#125; /&gt;</span><br><span class="line">            &lt;input type=<span class="string">"text"</span> value=&#123;props.todo.name&#125; onChange=&#123;e =&gt; props.todo.setName(e.target.value)&#125; /&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;)</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">const AppView = observer(props =&gt;</span></span><br><span class="line"><span class="regexp">        &lt;div&gt;</span></span><br><span class="line"><span class="regexp">            &lt;button onClick=&#123;e =&gt; props.store.addTodo(randomId(), 'New Task')&#125;&gt;Add Task&lt;/</span>button&gt;</span><br><span class="line">            &#123;props.store.todos.values().map(<span class="function"><span class="params">todo</span> =&gt;</span> &lt;TodoView todo=&#123;todo&#125; /&gt;)&#125;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">)</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://codesandbox.io/s/m3rw1wll79" target="_blank" rel="noopener">View sample in playground</a></p>
+<p>经过改造之后，基本上每一个<code>observer</code>声明会促使只有被观测的数据改变之后，相对应的 React 组件才会被重新渲染。可是 App 组件依然在观测着所有事情，所以无论你修改什么，它还是会被重新渲染。</p>
+<p>现在我们把渲染逻辑分离到一个单独的<code>observer</code>中，这时 todo 就只会在它本身数据有变化时才会重新渲染。而 App 组件也只是在添加/删除 todo 时才会被重新渲染，因为它现在只是在观测 todo 的长度而已。</p>
+<h2 id="计算属性"><a href="#计算属性" class="headerlink" title="计算属性"></a>计算属性</h2><p>我们想在应用里展示所有 todo 的数目，以便让用户知道还有哪些 todo 还未完成。这就意味着我们要计算出那些“done”属性被设置为 false 的 todo 数量。因此，我们要修改一下 RootStore 声明，并且通过调用<code>.views</code>方法去添加 get 属性，以便能够计算出哪些 todo 还未完成。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> RootStore = types.model(&#123;</span><br><span class="line">    users: types.map(User),</span><br><span class="line">    todos: types.optional(types.map(Todo), &#123;&#125;),</span><br><span class="line">&#125;).views(<span class="function"><span class="params">self</span> =&gt;</span> (&#123;</span><br><span class="line">    get pendingCount() &#123;</span><br><span class="line">        <span class="keyword">return</span> self.todos.values().filter(<span class="function"><span class="params">todo</span> =&gt;</span> !todo.done).length</span><br><span class="line">    &#125;,</span><br><span class="line">    get completedCount() &#123;</span><br><span class="line">        <span class="keyword">return</span> self.todos.values().filter(<span class="function"><span class="params">todo</span> =&gt;</span> todo.done).length</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)).actions(<span class="function"><span class="params">self</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">addTodo</span>(<span class="params">id, name</span>) </span>&#123;</span><br><span class="line">        self.todos.set(id, Todo.create(&#123; name &#125;))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;addTodo&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><a href="https://codesandbox.io/s/x3qlr3xpjo" target="_blank" rel="noopener">View sample in playground</a></p>
+<p>这些计算属性会一直追踪着被观察字段的变化，一旦有使用的字段值发生了改变，就会自动重新计算。这里其实有值得优化的性能问题，比如，改变 todo 的 name 其实不应该影响 todo 的完成与未完成数量。</p>
+<p>我们可以通过添加一个额外的组件来单独观察完成与未完成的数量。现在再使用 React 开发者工具的“Highlight Updates”功能，你会发现改变 todo 的 name 就不会触发 todo 的数量也会重新渲染了，而只有当你切换它们的完成状态时，才会触发数量的重新渲染。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> TodoCounterView = observer(<span class="function"><span class="params">props</span> =&gt;</span></span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &#123;props.store.pendingCount&#125; pending, &#123;props.store.completedCount&#125; completed</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">)</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">const AppView = observer(props =&gt;</span></span><br><span class="line"><span class="regexp">        &lt;div&gt;</span></span><br><span class="line"><span class="regexp">            &lt;button onClick=&#123;e =&gt; props.store.addTodo(randomId(), 'New Task')&#125;&gt;Add Task&lt;/</span>button&gt;</span><br><span class="line">            &#123;props.store.todos.values().map(<span class="function"><span class="params">todo</span> =&gt;</span> &lt;TodoView todo=&#123;todo&#125; /&gt;)&#125;</span><br><span class="line">            &lt;TodoCounterView store=&#123;props.store&#125; /&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">)</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://codesandbox.io/s/x3qlr3xpjo" target="_blank" rel="noopener">View sample in playground</a></p>
+<p>如果你<code>console.log</code>一下快照会发现，计算属性并没有出现在快照中。这其实故意就是这样设计的，因为计算属性必须是基于树的其它属性变化，才会被重新计算。因此，当你在快照中添加一个计算属性时，就会抛出异常。</p>
+<h2 id="model-视图"><a href="#model-视图" class="headerlink" title="model 视图"></a>model 视图</h2><p>你有可能需要在应用程序的不同位置使用过滤之后的待办事项列表。虽然每次去访问过滤一下待办事项列表也是一个可行的方案，但是，如果你的过滤器逻辑很复杂或者它随着时间在不断的变化，你就会发现这个方案并不是那么可行了。</p>
+<p>MST 通过可以声明 model 视图来解决这个问题。A model views is declared as a function over the properties (first argument) of the model declaration. Model view 可以接受若干参数，并且仅能从 store 中读取数据。如果你尝试在 model view 中改变 store 的话，MST 就会抛出异常以阻止你这么做。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> RootStore = types.model(&#123;</span><br><span class="line">    users: types.map(User),</span><br><span class="line">    todos: types.optional(types.map(Todo), &#123;&#125;)</span><br><span class="line">&#125;).views(<span class="function"><span class="params">self</span> =&gt;</span> (&#123;</span><br><span class="line">    get pendingCount() &#123;</span><br><span class="line">        <span class="keyword">return</span> self.todos.values().filter(<span class="function"><span class="params">todo</span> =&gt;</span> !todo.done).length</span><br><span class="line">    &#125;,</span><br><span class="line">    get completedCount() &#123;</span><br><span class="line">        <span class="keyword">return</span> self.todos.values().filter(<span class="function"><span class="params">todo</span> =&gt;</span> todo.done).length</span><br><span class="line">    &#125;,</span><br><span class="line">    getTodosWhereDoneIs(done) &#123;</span><br><span class="line">        <span class="keyword">return</span> self.todos.values().filter(<span class="function"><span class="params">todo</span> =&gt;</span> todo.done === done)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)).actions(<span class="function"><span class="params">self</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">addTodo</span>(<span class="params">id, name</span>) </span>&#123;</span><br><span class="line">        self.todos.set(id, Todo.create(&#123; name &#125;))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;addTodo&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><a href="https://codesandbox.io/s/zkrkwj91p3" target="_blank" rel="noopener">View sample in playground</a></p>
+<p>Notice that the <code>getTodosWhereDoneIs</code> view can also be used outside of its model, for example it can be used inside views.</p>
+<h2 id="更进一步：引用"><a href="#更进一步：引用" class="headerlink" title="更进一步：引用"></a>更进一步：引用</h2><p>好了，这个基础的 TODO 应用已经完成了。还记得我上面说过的话吗，要让它具备能够给用户分配待办事项的能力。</p>
+<p>在开始开发此功能之前，假设我们已经有了一个用户列表数据。你可以任意方式实现它或者可以给应用添加一个用户管理属性<code>users</code>，然后给它填充一些简单的数据映射即可。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> store = RootStore.create(&#123;</span><br><span class="line">    <span class="string">"users"</span>: &#123;</span><br><span class="line">        <span class="string">"1"</span>: &#123;</span><br><span class="line">            name: <span class="string">"mweststrate"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">"2"</span>: &#123;</span><br><span class="line">            name: <span class="string">"mattiamanzati"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">"3"</span>: &#123;</span><br><span class="line">            name: <span class="string">"johndoe"</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"todos"</span>: &#123;</span><br><span class="line">        <span class="string">"1"</span>: &#123;</span><br><span class="line">            <span class="string">"name"</span>: <span class="string">"Eat a cake"</span>,</span><br><span class="line">            <span class="string">"done"</span>: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><a href="https://codesandbox.io/s/7zqlw3ro11" target="_blank" rel="noopener">View sample in playground</a></p>
+<p>现在需要改写一下我们的 Todo model，以便让它能够将任务分配给相应的<code>user</code>。当然，你可以通过存储用户<code>id</code>，然后指定一个经过计算过的<code>user</code>来完成此功能。但是，这可能会最终导致你需要写大量的代码。（你可以自己做下练习）。</p>
+<p>MST 提供了开箱即用的功能：引用。这意味着我们可以在 Todo model 上定义一个<code>user</code>属性，它是<code>User</code>对象的一个引用。当获取快照的时候，属性值就是<code>User</code>的标识符；当读取的时候，它会指定一个正确的<code>User model</code>实例；当设置它的值时，你可以提供<code>User model</code>实例或者<code>User</code>标识符都是可以的。</p>
+<h3 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h3><p>为了使引用能够工作起来，我们首先需要在目标 model 上创建一个引用的类型标识符，还需要告诉 MST 哪一个属性是<code>user</code>的标识符。</p>
+<p>一旦 model 实例被创建并不会使标识符属性产生突变。这也就意味着如果你使用不同的标识符尝试把一个快照应用到那个 model 上，它就会抛出异常。换句话说，提供一个标识符可以帮助 MST 去理解 map 和 array 里的元素。并且在可能的情况下，使它能够在 maps/arrays 里正确的去重新使用 model 实例。</p>
+<p>为了定义一个标识符，你需要先使用<code>types.identifier</code>定义一个元类型属性。比如，在这里我们期望标识符为字符串类型。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> User = types.model(&#123;</span><br><span class="line">    id: types.identifier(types.string),</span><br><span class="line">    name: types.optional(types.string, <span class="string">""</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>就像我以前说过的，标识符在元素的创建上是必需的，并且不会被突变。因此如果你收到了这样的错误提示，那是因为你还需要在使用 RootStore 创建的快照中也添加上相应的 id。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Error: [mobx-state-tree] Error while converting `&#123;&quot;users&quot;:&#123;&quot;1&quot;:&#123;&quot;name&quot;:&quot;mweststrate&quot;&#125;,&quot;2&quot;:&#123;&quot;name&quot;:&quot;mattiamanzati&quot;&#125;,&quot;3&quot;:&#123;&quot;name&quot;:&quot;johndoe&quot;&#125;&#125;,&quot;todos&quot;:&#123;&quot;1&quot;:&#123;&quot;name&quot;:&quot;Eat a cake&quot;,&quot;done&quot;:true&#125;&#125;&#125;` to `AnonymousModel`:</span><br><span class="line">at path &quot;/users/1/id&quot; value `undefined` is not assignable to type: `identifier(string)`, expected an instance of `identifier(string)` or a snapshot like `identifier(string)` instead.</span><br><span class="line">at path &quot;/users/2/id&quot; value `undefined` is not assignable to type: `identifier(string)`, expected an instance of `identifier(string)` or a snapshot like `identifier(string)` instead.</span><br><span class="line">at path &quot;/users/3/id&quot; value `undefined` is not assignable to type: `identifier(string)`, expected an instance of `identifier(string)` or a snapshot like `identifier(string)` instead.</span><br></pre></td></tr></table></figure>
+<p>我们可以通过提供一个正确的快照来很容易的修复这个问题。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> store = RootStore.create(&#123;</span><br><span class="line">    <span class="string">"users"</span>: &#123;</span><br><span class="line">        <span class="string">"1"</span>: &#123;</span><br><span class="line">            id: <span class="string">"1"</span>,</span><br><span class="line">            name: <span class="string">"mweststrate"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">"2"</span>: &#123;</span><br><span class="line">            id: <span class="string">"2"</span>,</span><br><span class="line">            name: <span class="string">"mattiamanzati"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">"3"</span>: &#123;</span><br><span class="line">            id: <span class="string">"3"</span>,</span><br><span class="line">            name: <span class="string">"johndoe"</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"todos"</span>: &#123;</span><br><span class="line">        <span class="string">"1"</span>: &#123;</span><br><span class="line">            <span class="string">"name"</span>: <span class="string">"Eat a cake"</span>,</span><br><span class="line">            <span class="string">"done"</span>: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p><a href="https://codesandbox.io/s/mzvx6o7r0j" target="_blank" rel="noopener">View sample in playground</a></p>
+<h3 id="如何定义引用"><a href="#如何定义引用" class="headerlink" title="如何定义引用"></a>如何定义引用</h3><p>可以很容易地通过<code>types.reference(User)</code>来定义引用。但有时候这种方式可能会导致循环引用。To postpone the resolution of the type, you can use <code>types.late(() =&gt; User)</code> instead of just <code>User</code> and that will hoist the type and defer its evaluation. The user assignee for the Todo could also be omitted, so we will use <code>types.maybe(...)</code> to allow the user property to be null and be initialized as null.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Todo = types.model(&#123;</span><br><span class="line">    name: types.optional(types.string, <span class="string">""</span>),</span><br><span class="line">    done: types.optional(types.boolean, <span class="literal">false</span>),</span><br><span class="line">    user: types.maybe(types.reference(types.late(<span class="function"><span class="params">()</span> =&gt;</span> User)))</span><br><span class="line">&#125;).actions(<span class="function"><span class="params">self</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">setName</span>(<span class="params">newName</span>) </span>&#123;</span><br><span class="line">        self.name = newName</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">toggle</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        self.done = !self.done</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;setName, toggle&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><a href="https://codesandbox.io/s/mzvx6o7r0j" target="_blank" rel="noopener">View sample in playground</a></p>
+<h3 id="设置引用的值"><a href="#设置引用的值" class="headerlink" title="设置引用的值"></a>设置引用的值</h3><p>引用的值可以通过标识符或者 model 实例来提供。首先，我们需要定义一个可以改变 todo 的 user 的<code>action</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Todo = types.model(&#123;</span><br><span class="line">    name: types.optional(types.string, <span class="string">""</span>),</span><br><span class="line">    done: types.optional(types.boolean, <span class="literal">false</span>),</span><br><span class="line">    user: types.maybe(types.reference(types.late(<span class="function"><span class="params">()</span> =&gt;</span> User)))</span><br><span class="line">&#125;).actions(<span class="function"><span class="params">self</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">setName</span>(<span class="params">newName</span>) </span>&#123;</span><br><span class="line">        self.name = newName</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">setUser</span>(<span class="params">user</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (user === <span class="string">""</span>) &#123; <span class="comment">// When selected value is empty, set as null</span></span><br><span class="line">            self.user = <span class="literal">null</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            self.user = user</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">toggle</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        self.done = !self.done</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;setName, setUser, toggle&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>Now we need to edit our views to display a select along with each todo, where the user can choose the assignee for that task. To do so, we will create a separate component (the UserPickerView) and use it inside the TodoView component to trigger the setUser call. That’s it!</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> UserPickerView = observer(<span class="function"><span class="params">props</span> =&gt;</span></span><br><span class="line">    &lt;select value=&#123;props.user ? props.user.id : <span class="string">""</span>&#125; onChange=&#123;e =&gt; props.onChange(e.target.value)&#125;&gt;</span><br><span class="line">        &lt;option value=<span class="string">""</span>&gt;-none-&lt;/option&gt;</span><br><span class="line">        &#123;props.store.users.values().map(<span class="function"><span class="params">user</span> =&gt;</span> &lt;option value=&#123;user.id&#125;&gt;&#123;user.name&#125;&lt;<span class="regexp">/option&gt;)&#125;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>select&gt;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> TodoView = observer(<span class="function"><span class="params">props</span> =&gt;</span></span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &lt;input type=<span class="string">"checkbox"</span> checked=&#123;props.todo.done&#125; onChange=&#123;e =&gt; props.todo.toggle()&#125; /&gt;</span><br><span class="line">            &lt;input type=<span class="string">"text"</span> value=&#123;props.todo.name&#125; onChange=&#123;e =&gt; props.todo.setName(e.target.value)&#125; /&gt;</span><br><span class="line">            &lt;UserPickerView user=&#123;props.todo.user&#125; store=&#123;props.store&#125; onChange=&#123;userId =&gt; props.todo.setUser(userId)&#125; /&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">)</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">const TodoCounterView = observer(props =&gt;</span></span><br><span class="line"><span class="regexp">        &lt;div&gt;</span></span><br><span class="line"><span class="regexp">            &#123;props.store.pendingCount&#125; pending, &#123;props.store.completedCount&#125; completed</span></span><br><span class="line"><span class="regexp">        &lt;/</span>div&gt;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> AppView = observer(<span class="function"><span class="params">props</span> =&gt;</span></span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &lt;button onClick=&#123;e =&gt; props.store.addTodo(randomId(), <span class="string">'New Task'</span>)&#125;&gt;Add Task&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">            &#123;props.store.todos.values().map(todo =&gt; &lt;TodoView store=&#123;props.store&#125; todo=&#123;todo&#125; /</span>&gt;)&#125;</span><br><span class="line">            &lt;TodoCounterView store=&#123;props.store&#125; /&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">)</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://codesandbox.io/s/mzvx6o7r0j" target="_blank" rel="noopener">View sample in playground</a></p>
+<h2 id="References-are-safe"><a href="#References-are-safe" class="headerlink" title="References are safe!"></a>References are safe!</h2><p>One neat feature of references, is that they will throw if you accidentally remove a model that is required by a computed! If you try to remove a user that’s used by a reference, you’ll get something like this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[mobx-state-tree] Failed to resolve reference of type &lt;late&gt;: &apos;1&apos; (in: /todos/1/user)</span><br></pre></td></tr></table></figure>
+<h2 id="Next-up"><a href="#Next-up" class="headerlink" title="Next up"></a>Next up</h2><p>In part 2 of this tutorial, we will discover how to use MST lifecycle hooks and local state to fetch user data from an XHR endpoint, and see how environments will help dealing with dependency injection of the parameters needed to fetch our endpoint. We will implement auto-save using mobx helpers and learn more about patches and actions event streams.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/22/js数据结构之栈/" rel="next" title="js实现数据结构之栈">
+                <i class="fa fa-chevron-left"></i> js实现数据结构之栈
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/30/axios-取消请求/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">huajieyu</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#入门指南"><span class="nav-number">1.</span> <span class="nav-text">入门指南</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#预备知识"><span class="nav-number">1.1.</span> <span class="nav-text">预备知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#我需要提前学习-MobX-吗"><span class="nav-number">1.1.1.</span> <span class="nav-text">我需要提前学习 MobX 吗?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何跟随这门教程"><span class="nav-number">1.2.</span> <span class="nav-text">如何跟随这门教程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在浏览器中写代码"><span class="nav-number">1.2.1.</span> <span class="nav-text">在浏览器中写代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在编辑器中写代码"><span class="nav-number">1.2.2.</span> <span class="nav-text">在编辑器中写代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.3.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#入门指南-1"><span class="nav-number">1.4.</span> <span class="nav-text">入门指南</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建第一个-model"><span class="nav-number">1.5.</span> <span class="nav-text">创建第一个 model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建-model-实例-tree-nodes"><span class="nav-number">1.6.</span> <span class="nav-text">创建 model 实例 (tree nodes)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遇见-types"><span class="nav-number">1.7.</span> <span class="nav-text">遇见 types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改数据"><span class="nav-number">1.8.</span> <span class="nav-text">修改数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#强大的快照！"><span class="nav-number">1.9.</span> <span class="nav-text">强大的快照！</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从快照到-model"><span class="nav-number">1.10.</span> <span class="nav-text">从快照到 model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间旅行"><span class="nav-number">1.11.</span> <span class="nav-text">时间旅行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#和界面关联起来"><span class="nav-number">1.12.</span> <span class="nav-text">和界面关联起来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提高渲染性能"><span class="nav-number">1.13.</span> <span class="nav-text">提高渲染性能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算属性"><span class="nav-number">1.14.</span> <span class="nav-text">计算属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model-视图"><span class="nav-number">1.15.</span> <span class="nav-text">model 视图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更进一步：引用"><span class="nav-number">1.16.</span> <span class="nav-text">更进一步：引用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#标识符"><span class="nav-number">1.16.1.</span> <span class="nav-text">标识符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何定义引用"><span class="nav-number">1.16.2.</span> <span class="nav-text">如何定义引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置引用的值"><span class="nav-number">1.16.3.</span> <span class="nav-text">设置引用的值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References-are-safe"><span class="nav-number">1.17.</span> <span class="nav-text">References are safe!</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Next-up"><span class="nav-number">1.18.</span> <span class="nav-text">Next up</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">huajieyu</span>
+
+  
+</div>
+
+
+  <span id="busuanzi_container_site_uv"> 
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+ </span>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

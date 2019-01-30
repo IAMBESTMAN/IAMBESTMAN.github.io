@@ -79,19 +79,28 @@
 
 
 
-<meta name="description" content="最近正在看es6的class语法，看到了一个示例用了Object.create(),就想到为什么不用new Object于是就有了看一下Object.create()和new Object的想法。  为了方便书写 Object.create() 用create代替，new Object用new代替  12345var Base = function () &amp;#123;&amp;#125;var o1 =">
+<meta name="description" content="最近在开发中遇到了一个line-height的值影响当前页面布局的问题,具体的如下图所示：     在没有给子元素设置任何的属性的时候，子元素会和font-size,color这些属性继承父元素设置的line-height属性，会根据line-height的值自动撑开元素  123.box2 &amp;#123;      line-height: normal;    &amp;#125;  给父元素设置默认">
 <meta property="og:type" content="article">
-<meta property="og:title" content="new Object 和 Object.create的区别">
-<meta property="og:url" content="http://yoursite.com/2018/05/02/new Object 和 Object.create的区别/index.html">
+<meta property="og:title" content="line-height继承问题">
+<meta property="og:url" content="http://yoursite.com/2018/08/21/line-height问题/index.html">
 <meta property="og:site_name" content="花解语">
-<meta property="og:description" content="最近正在看es6的class语法，看到了一个示例用了Object.create(),就想到为什么不用new Object于是就有了看一下Object.create()和new Object的想法。  为了方便书写 Object.create() 用create代替，new Object用new代替  12345var Base = function () &amp;#123;&amp;#125;var o1 =">
+<meta property="og:description" content="最近在开发中遇到了一个line-height的值影响当前页面布局的问题,具体的如下图所示：     在没有给子元素设置任何的属性的时候，子元素会和font-size,color这些属性继承父元素设置的line-height属性，会根据line-height的值自动撑开元素  123.box2 &amp;#123;      line-height: normal;    &amp;#125;  给父元素设置默认">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://img.hb.aicdn.com/61dc3eb196d0b37d561e7eeee9a3bb3deffdadf332c9-TgEc66_fw658">
-<meta property="og:updated_time" content="2018-05-02T10:06:57.076Z">
+<meta property="og:image" content="http://img.hb.aicdn.com/2a89260a176752640d0d5db9a08a76b335c5cb0fb318-C6aVwD_fw658">
+<meta property="og:image" content="http://img.hb.aicdn.com/38458ff2c0b0f4fa4ee8ed5bbd68754d610588e436237-3Bb6LV_fw658">
+<meta property="og:image" content="http://img.hb.aicdn.com/cdc0aa058c5f581b7c688037ab16427a87adef9b70df-D0Pwei_fw658">
+<meta property="og:image" content="http://img.hb.aicdn.com/b63d4d233ee0f48472a80064798294329542a4ad32aa3-ULFCWT_fw658">
+<meta property="og:image" content="http://img.hb.aicdn.com/b99f608673897bf440c1074ee2c129fafaf93a905c01-dCywqg_fw658">
+<meta property="og:image" content="http://img.hb.aicdn.com/07227b227f1e684f93868c40b08004b1670e291421a3b-b2HyZv_fw658">
+<meta property="og:image" content="http://img.hb.aicdn.com/99969b15a9d8d8c2721d3ee0d18d59ceedb989575c8b-sklx9F_fw658">
+<meta property="og:image" content="http://img.hb.aicdn.com/18455380202735f9ae7d6c2dd44cd1fe1a25391129978-0SJivu_fw658">
+<meta property="og:image" content="http://img.hb.aicdn.com/0b2c306b2d822025a7d67a7ef761b7d2c4ccc2fa849b-xcU96S_fw658">
+<meta property="og:image" content="http://img.hb.aicdn.com/c9c284340b393e1576076e33c3a102606b5d406433326-gN1q4p_fw658">
+<meta property="og:updated_time" content="2019-01-30T15:03:47.381Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="new Object 和 Object.create的区别">
-<meta name="twitter:description" content="最近正在看es6的class语法，看到了一个示例用了Object.create(),就想到为什么不用new Object于是就有了看一下Object.create()和new Object的想法。  为了方便书写 Object.create() 用create代替，new Object用new代替  12345var Base = function () &amp;#123;&amp;#125;var o1 =">
-<meta name="twitter:image" content="http://img.hb.aicdn.com/61dc3eb196d0b37d561e7eeee9a3bb3deffdadf332c9-TgEc66_fw658">
+<meta name="twitter:title" content="line-height继承问题">
+<meta name="twitter:description" content="最近在开发中遇到了一个line-height的值影响当前页面布局的问题,具体的如下图所示：     在没有给子元素设置任何的属性的时候，子元素会和font-size,color这些属性继承父元素设置的line-height属性，会根据line-height的值自动撑开元素  123.box2 &amp;#123;      line-height: normal;    &amp;#125;  给父元素设置默认">
+<meta name="twitter:image" content="http://img.hb.aicdn.com/2a89260a176752640d0d5db9a08a76b335c5cb0fb318-C6aVwD_fw658">
 
 
 
@@ -121,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/05/02/new Object 和 Object.create的区别/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/08/21/line-height问题/"/>
 
 
 
 
 
-  <title>new Object 和 Object.create的区别 | 花解语</title>
+  <title>line-height继承问题 | 花解语</title>
   
 
 
@@ -234,7 +243,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/02/new Object 和 Object.create的区别/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/21/line-height问题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="huajieyu">
@@ -251,7 +260,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">new Object 和 Object.create的区别</h1>
+          <h1 class="post-title" itemprop="name headline">line-height继承问题</h1>
         
 
         <div class="post-meta">
@@ -263,8 +272,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-02T18:06:57+08:00">
-                2018-05-02
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-21T19:23:22+08:00">
+                2018-08-21
               </time>
             
 
@@ -286,8 +295,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
+                  <a href="/categories/css/" itemprop="url" rel="index">
+                    <span itemprop="name">css</span>
                   </a>
                 </span>
 
@@ -323,27 +332,41 @@
       
 
       
-        <p>最近正在看es6的class语法，看到了一个示例用了<code>Object.create()</code>,就想到为什么不用<code>new Object</code>于是就有了看一下<code>Object.create()</code>和<code>new Object</code>的想法。</p>
-<blockquote>
-<p>为了方便书写 <code>Object.create()</code> 用create代替，<code>new Object</code>用new代替</p>
+        <blockquote>
+<p>最近在开发中遇到了一个line-height的值影响当前页面布局的问题,具体的如下图所示：</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var Base = function () &#123;&#125;</span><br><span class="line">var o1 = new Base();</span><br><span class="line">var o2 = Object.create(Base);</span><br><span class="line">console.log(o1); // Base()</span><br><span class="line">console.log(o2); // Function()</span><br></pre></td></tr></table></figure>
-<p>创建了一个名为Base的构造函数，分别用 new 和 create创建了两个实例。打印的结果出乎意。o1实例的<code>Base类</code> o2是<code>Function类</code></p>
-<p>o1的<code>__proto__</code>指向的是Base类的prototype,Base类的<code>__proto__</code>指向的是Object这个基类的原型.</p>
-<p>o2指向的是Function的<code>prototype</code>, Function本身就是基类.</p>
-<p><strong><strong>那么这两个具体的区别是什么那？</strong></strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var Base = function () &#123;&#125;</span><br><span class="line">Base.prototype = &#123;</span><br><span class="line">  say: function () &#123;</span><br><span class="line">    console.log(&apos;hello&apos;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">var o1 = new Base();</span><br><span class="line"></span><br><span class="line">var o2 = Object.create(Base);</span><br><span class="line"></span><br><span class="line">o1.say(); // hello</span><br><span class="line">o2.say(); // o2.say is not a function</span><br></pre></td></tr></table></figure>
-<p>为<code>Base</code>构造函数的<code>prototype</code>增加一个say方法，o1、o2实例分别执行这个方法。<br><code>o1.say()</code> 执行的结果是 hello ，<code>o2.say()</code>抛错说 <code>o2.say</code> 不是一个函数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">var Base = function () &#123;</span><br><span class="line">  this.a = 1;</span><br><span class="line">&#125;</span><br><span class="line">Base.prototype = &#123;</span><br><span class="line">  say: function () &#123;</span><br><span class="line">    console.log(&apos;hello&apos;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">var o1 = new Base();</span><br><span class="line"></span><br><span class="line">var o2 = Object.create(Base);</span><br><span class="line">console.log(o1.__proto__); // &#123; say: [Function: say] &#125;</span><br><span class="line">console.log(o2.__proto__); // [Function: Base]</span><br></pre></td></tr></table></figure>
-<p>然后我分别打印了两个实例的<code>__proto__</code>，发现两个实例的<code>__proto__</code>的指向不是一样的，o1的指向是Base构造函数的原型，而o2的指向是构造函数本身。由此就可以明白了为什么<code>o2.say()</code>不是一个函数了，o2的<code>prototype</code>是Base构造函数，而Base的<code>__proto__</code>的指向是<code>Function</code>这个基类</p>
-<p><img src="http://img.hb.aicdn.com/61dc3eb196d0b37d561e7eeee9a3bb3deffdadf332c9-TgEc66_fw658" alt="avatar"></p>
-<p>这个是我分析后画出来的原型图，通过这个原型图可以看出，o1实例指向的是Base这个构造函数的原型，o2指向的是这个构造函数，o1继承了Base<code>prototype</code>上的属性和方法，而o2直接通过<code>__proto__</code>查找Base的所属类的原型也就是<code>Function</code>,并没有继承任何方法。</p>
-<p><strong><strong>为什么会出现这种情况那？</strong></strong></p>
+<p><img src="http://img.hb.aicdn.com/2a89260a176752640d0d5db9a08a76b335c5cb0fb318-C6aVwD_fw658" alt="avatar"></p>
+<p><img src="http://img.hb.aicdn.com/38458ff2c0b0f4fa4ee8ed5bbd68754d610588e436237-3Bb6LV_fw658" alt="avatar"></p>
 <blockquote>
-<p>分析一下Object.create的实现 方法</p>
+<p>在没有给子元素设置任何的属性的时候，子元素会和font-size,color这些属性继承父元素设置的line-height属性，会根据line-height的值自动撑开元素</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Object.create = function(o) &#123;</span><br><span class="line">    var F = function() &#123;&#125;;</span><br><span class="line">    F.prototype = o;</span><br><span class="line">    return new F;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>从Object.create的实现方式可以看出 ，实现方式是先创建一个构造函数，然后让这个对象的原型等于传递进来的方法，然后在new一个新的实例。问什么会和 new 创建的方法不一样的，只要是因为新的实例的原型指向的是构造函数，并不是构造函数的原型</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.box2 &#123;</span><br><span class="line">      line-height: normal;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>给父元素设置默认值会，子元素就会回归到正常的状态，但是在有些情况下父元素是需要设置line-height属<br>性的，子元素如果不想继承父元素的line-height可以自行设置line-height的属性值</p>
+</blockquote>
+<p><img src="http://img.hb.aicdn.com/cdc0aa058c5f581b7c688037ab16427a87adef9b70df-D0Pwei_fw658" alt="avatar"></p>
+<p><img src="http://img.hb.aicdn.com/b63d4d233ee0f48472a80064798294329542a4ad32aa3-ULFCWT_fw658" alt="avatar"></p>
+<blockquote>
+<p>但是如果将line-height设置为0就会出现容器内的内联元素会在父元素的上方溢出,如下图所示：</p>
+</blockquote>
+<p><img src="http://img.hb.aicdn.com/b99f608673897bf440c1074ee2c129fafaf93a905c01-dCywqg_fw658" alt="avatar"></p>
+<p><img src="http://img.hb.aicdn.com/07227b227f1e684f93868c40b08004b1670e291421a3b-b2HyZv_fw658" alt="avatar"></p>
+<blockquote>
+<p>如果是多个内联元素就会出现重叠的现象，如下图所示：</p>
+</blockquote>
+<p><img src="http://img.hb.aicdn.com/99969b15a9d8d8c2721d3ee0d18d59ceedb989575c8b-sklx9F_fw658" alt="avatar"></p>
+<p><img src="http://img.hb.aicdn.com/18455380202735f9ae7d6c2dd44cd1fe1a25391129978-0SJivu_fw658" alt="avatar"></p>
+<blockquote>
+<p>当前容器的宽度不足以放下所有内容时，里面的内容就会折行。当父元素的line-height设置为0时内联元素&gt;的的line-height会继承父元素的，从父元素的左上角为起点，内联元素的中间点为起点开始计算。超出父元素<br>的部分计算为负值。为在父元素里面的部分为正值。将元素中间放在父元素的开始，上下距离相加等于父元素&gt;的line-height值，绘制子元素的位置。当子元素为内联元素的时候，折行的部分算作一个新的内容，同上计算<br>line-height值，所以会出现重叠的现象</p>
+</blockquote>
+<blockquote>
+<p>当子元素为块级元素并设置了子元素的高度</p>
+</blockquote>
+<p><img src="http://img.hb.aicdn.com/0b2c306b2d822025a7d67a7ef761b7d2c4ccc2fa849b-xcU96S_fw658" alt="avatar"></p>
+<p><img src="http://img.hb.aicdn.com/c9c284340b393e1576076e33c3a102606b5d406433326-gN1q4p_fw658" alt="avatar"></p>
+<blockquote>
+<p>内联元素永远会基于父元素的起点开始计算line-height的值,如果不设置内联元素父元素的高度，会出现和&gt;内联元素一样的效果，全部堆积到一块了。</p>
+</blockquote>
 
       
     </div>
@@ -368,8 +391,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/27/hello-hexo/" rel="next" title="Hello Hexo">
-                <i class="fa fa-chevron-left"></i> Hello Hexo
+              <a href="/2018/07/29/前端跨域的九种解决方案/" rel="next" title="前端跨域的九种解决方案">
+                <i class="fa fa-chevron-left"></i> 前端跨域的九种解决方案
               </a>
             
           </div>
@@ -378,8 +401,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/05/09/canvas笔记/" rel="prev" title="canvas笔记">
-                canvas笔记 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/08/22/mac下nginx安装/" rel="prev" title="mac下nginx安装">
+                mac下nginx安装 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
